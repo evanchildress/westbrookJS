@@ -1,19 +1,19 @@
-source("~/makeDMData/data_prep/dMDataFunctionFromDB.r")
-source("constructBugsJS.r")
-makeDMData()
-
 bugsData<-list(
   #Long format data
-  encDATA=d$enc,
-  river=d$riverN,
-  sample=d$sampleNumAdj,
-  z=d$zKnown,
+  encDATA=d$enc
+  ,river=d$riverN
+  ,sample=d$sampleNumAdj
+  ,z=d$zKnown
   
   #Control pieces
-  nSamples=evalList$nSamples,
-  nRivers=evalList$nRivers,
-  evalRows=evalList$evalRows,
-  nEvalRows=evalList$nEvalRows
+  ,nSamples=evalList$nSamples
+  ,nRivers=evalList$nRivers
+  ,evalRows=evalList$evalRows
+  ,nEvalRows=evalList$nEvalRows
+  ,summerSamples=evalList$summerSamples
+  ,nSummerSamples=length(evalList$summerSamples)
+  ,nonSummerSamples=evalList$nonSummerSamples
+  ,nNonSummerSamples=length(evalList$nonSummerSamples)
   #,firstObsRows=evalList$firstObsRows
   #,nFirstObsRows=evalList$nFirstObsRows
   )
@@ -59,3 +59,4 @@ out <- jags(
 
 ( done <- Sys.time() ) 
 print(done - beforeJags)
+

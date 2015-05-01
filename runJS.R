@@ -1,5 +1,9 @@
+#source("~/makeDMData/data_prep/dMDataFunctionFromDB.r")
+#makeDMData()
+source("constructBugsStageJS.r")
+
 simNum <- 1
-rDataName <- 'dMDataOutbkt.RData'
+rDataName <- 'dMDataOutbkt1996_2014.RData'
 dataStore<-"~/process-data/data_store/processed_data"
 
 ##########
