@@ -11,14 +11,15 @@ cat("model{
   for( s in 1:nSamples ){     
       for( r in 1:(nRivers) ){  
 
-         phi[ s,r ] <- meanPhi
+         phiYoy[ s,r ] <- dunif(0,1)
+         phiAdult[ s,r ] <- dunif(0,1)
          gamma[ s,r ] ~ dunif(0,1)
-         p [ s,r ] <- meanP
+         pYoy [ s,r ] <- dunif(0,1)
+         pAdult [ s,r ] <- dunif(0,1)
     
       }
     }
-  meanPhi~dunif(0,1)
-  meanP~dunif(0,1)
+
   
   #Define state-transition and observation matrices
 
