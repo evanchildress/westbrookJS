@@ -1,0 +1,16 @@
+{
+    "contents" : "simNum <- 1\nrDataName <- 'dMDataOutBKT2002_2011.RData'\n\n##########\ncomment<-paste(\" model\",simNum, \" MS Sim \"  )\n\nhome <- paste(\"c:/PITTAGMAIN/CMR Analyses/Hierach_Bugs/allSpp/MSRiver2/simpleCJS\",sep='')\n     \nsetwd( home )\ndirectory <- tempfile( pattern=\"output-\", tmpdir ='.', fileext='-simpleCJS')\ndir.create(directory)\n\nbugsName <- paste('~/simpleCJS/simpleCJS','.bugs',sep='')\n\nfile.copy(from='./callSimpleCJS.R', to=paste(directory,'callSimpleCJS.R',sep='/'))\nfile.copy(from=bugsName , to=paste(directory,bugsName ,sep='/'))\n#file.copy(from='./analyzeSimpleCJS.R', to=paste(directory,'analyzeSimpleCJS.R',sep='/'))\nfile.copy(from='./run.R', to=paste(directory,'run.R',sep='/'))\n##################\n#file.copy(from=paste(rDataName,sep=''), to=paste(directory,rDataName,sep='/'))\n##################\n\nsetwd(directory)\n\nfileOutName <- \"outMSRiver.RData\" \n\n#load(paste(home,'/',rDataName,simNum,'.RData',sep=''))\n\n####################\nload(paste('c:/PITTAGMAIN/CMR Analyses/Hierach_Bugs/allSpp',rDataName,sep='/'))\nload('c:/PITTAGMAIN/CMR Analyses/Hierach_Bugs/allSpp/fdDATA.RData')\n####################\n#print(parms)\n\nwriteLines(text = '')\ncat(\"Working directory for this run is: \", directory, \"\\n\", sep = '')\ncat(\"Output filename for this run is: \", fileOutName, \"\\n\", sep = '')\ncat(\"Comment: '\", comment, \"\\n\", sep = '')\nwriteLines(text = '')\n\nsource('~/callSimpleCJS.R')\n\n#writeLines(text=paste(date(),directory,afterAdapt - beforeAdapt,done - beforeJags), con='../latest_directory')\nwriteLines(text=paste(date(),directory,afterAdapt - beforeAdapt,done - beforeJags,\"[\", comment,\"]\"), con='./info.txt')\ngetwd()\n\nsave(d, out, file = fileOutName)\n\n################################################################\n",
+    "created" : 1430832656162.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3722816155",
+    "id" : "41611FFA",
+    "lastKnownWriteTime" : 1426711666,
+    "path" : "C:/Users/Evan/Desktop/Conte/simpleCJS/runFromAsus.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

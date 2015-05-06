@@ -1,0 +1,16 @@
+{
+    "contents" : "bugsData<-list(\n  #Long format data\n  encDATA=d$enc\n  ,river=d$riverN\n  ,sample=d$sampleNumAdj\n  ,z=d$zKnown\n  \n  #Control pieces\n  ,nSamples=evalList$nSamples\n  ,nRivers=evalList$nRivers\n  ,evalRows=evalList$evalRows\n  ,nEvalRows=evalList$nEvalRows\n  ,summerSamples=evalList$summerSamples\n  ,nSummerSamples=evalList$nSummerSamples\n  ,nonSummerSamples=evalList$nonSummerSamples\n  ,nNonSummerSamples=evalList$nNonSummerSamples\n  ,sampleRows=evalList$sampleRows\n  ,nSampleRows=evalList$nSampleRows\n  #,firstObsRows=evalList$firstObsRows\n  #,nFirstObsRows=evalList$nFirstObsRows\n  )\n\ninits<- function(){\n  list(meanPhi=runif(1,0,1),\n       gamma=array(runif(bugsData$nSamples*bugsData$nRivers,0,1),\n                   dim=c(bugsData$nSamples,bugsData$nRivers)),\n       meanP=runif(1,0,1)\n  )      \n}\n\n\n\n# MCMC settings\nna <- 500\nnb <- 1000\nni <- 2000\nnt <- 3\nnc <- 3\n\nvarsToMonitor<-c(\n   'phiYoy'\n  ,'phiAdult'\n  ,'pYoy'\n  ,'pAdult'\n  ,'b'\n  ,'nYoy'\n  ,'nAdult'\n  ,'psi'\n  )\n\nrm(dMData)\nrm(evalList)\ngc()\n\n(beforeJags<-Sys.time())\n\nout <- run.jags(\n  model=\"bugsJS.txt\",\n  )\nout <- jags(\n  data=bugsData,\n  inits=inits,\n  model = \"bugsJS.txt\",\n  parameters.to.save = varsToMonitor,\n  n.chains=nc,\n  n.iter = ni,\n  n.thin = nt,\n  n.burnin=nb)\n\n( done <- Sys.time() ) \nprint(done - beforeJags)\n\n",
+    "created" : 1430497637306.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3643715360",
+    "id" : "BB6E828D",
+    "lastKnownWriteTime" : 1430859557,
+    "path" : "C:/Users/Evan/Desktop/Conte/westbrookJS/callJS.R",
+    "project_path" : "callJS.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

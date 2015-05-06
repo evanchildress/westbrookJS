@@ -11,82 +11,41 @@ model{
   for( s in 1:nSamples ){     
       for( r in 1:(nRivers) ){  
 
-         phiYoy[ s,r ] ~ dunif(0,1)
-         phiAdult[ s,r ] ~ dunif(0,1)
+         phi[ s,r ] <- meanPhi
          gamma[ s,r ] ~ dunif(0,1)
-         pYoy [ s,r ] ~ dunif(0,1)
-         pAdult [ s,r ] ~ dunif(0,1)
+         p [ s,r ] <- meanP
     
       }
     }
+  meanPhi ~ dunif(0,1)
+  meanP ~ dunif(0,1)
 
   
   #Define state-transition and observation matrices
 
-    #State transition for non-summer (YOY stay YOY)
-  for( s in 1:nNonSummerSamples ){     
+    #State transition
+  for( s in 1:nSamples ){     
       for( r in 1:(nRivers) ){ 
-        ps[1,nonSummerSamples[s],r,1]<-1-gamma[s,r]
-        ps[1,nonSummerSamples[s],r,2]<-gamma[s,r]
-        ps[1,nonSummerSamples[s],r,3]<-0
-        ps[1,nonSummerSamples[s],r,4]<-0
-        ps[2,nonSummerSamples[s],r,1]<-0
-        ps[2,nonSummerSamples[s],r,2]<-phiYoy[s,r]
-        ps[2,nonSummerSamples[s],r,3]<-0
-        ps[2,nonSummerSamples[s],r,4]<-1-phiYoy[s,r]
-        ps[3,nonSummerSamples[s],r,1]<-0
-        ps[3,nonSummerSamples[s],r,2]<-0
-        ps[3,nonSummerSamples[s],r,3]<-phiAdult[s,r]
-        ps[3,nonSummerSamples[s],r,4]<-1-phiAdult[s,r]
-        ps[4,nonSummerSamples[s],r,1]<-0
-        ps[4,nonSummerSamples[s],r,2]<-0
-        ps[4,nonSummerSamples[s],r,3]<-0
-        ps[4,nonSummerSamples[s],r,4]<-1
+        ps[1,s,r,1]<-1-gamma[s,r]
+        ps[1,s,r,2]<-gamma[s,r]
+        ps[1,s,r,3]<-0
+        ps[2,s,r,1]<-0
+        ps[2,s,r,2]<-phi[s,r]
+        ps[2,s,r,3]<-1-phi[s,r]
+        ps[3,s,r,1]<-0
+        ps[3,s,r,2]<-0
+        ps[3,s,r,3]<-1
       
       #Observation
-        po[1,nonSummerSamples[s],r,1]<-0
-        po[1,nonSummerSamples[s],r,2]<-1
-        po[2,nonSummerSamples[s],r,1]<-pYoy[s,r]
-        po[2,nonSummerSamples[s],r,2]<-1-pYoy[s,r]
-        po[3,nonSummerSamples[s],r,1]<-pAdult[s,r]
-        po[3,nonSummerSamples[s],r,2]<-1-pAdult[s,r]
-        po[4,nonSummerSamples[s],r,1]<-0
-        po[4,nonSummerSamples[s],r,2]<-1
+        po[1,s,r,1]<-0
+        po[1,s,r,2]<-1
+        po[2,s,r,1]<-p[s,r]
+        po[2,s,r,2]<-1-p[s,r]
+        po[3,s,r,1]<-0
+        po[3,s,r,2]<-1
       }#r
     }#s
   
-    #State transition for summer (YOY mature)
-  for( s in 1:nSummerSamples ){     
-      for( r in 1:(nRivers) ){ 
-        ps[1,summerSamples[s],r,1]<-1-gamma[s,r]
-        ps[1,summerSamples[s],r,2]<-gamma[s,r]
-        ps[1,summerSamples[s],r,3]<-0
-        ps[1,summerSamples[s],r,4]<-0
-        ps[2,summerSamples[s],r,1]<-0
-        ps[2,summerSamples[s],r,2]<-0
-        ps[2,summerSamples[s],r,3]<-phiYoy[s,r]
-        ps[2,summerSamples[s],r,4]<-1-phiYoy[s,r]
-        ps[3,summerSamples[s],r,1]<-0
-        ps[3,summerSamples[s],r,2]<-0
-        ps[3,summerSamples[s],r,3]<-phiAdult[s,r]
-        ps[3,summerSamples[s],r,4]<-1-phiAdult[s,r]
-        ps[4,summerSamples[s],r,1]<-0
-        ps[4,summerSamples[s],r,2]<-0
-        ps[4,summerSamples[s],r,3]<-0
-        ps[4,summerSamples[s],r,4]<-1
-    
-      #Observation
-        po[1,summerSamples[s],r,1]<-0
-        po[1,summerSamples[s],r,2]<-1
-        po[2,summerSamples[s],r,1]<-pYoy[s,r]
-        po[2,summerSamples[s],r,2]<-1-pYoy[s,r]
-        po[3,summerSamples[s],r,1]<-pAdult[s,r]
-        po[3,summerSamples[s],r,2]<-1-pAdult[s,r]
-        po[4,summerSamples[s],r,1]<-0
-        po[4,summerSamples[s],r,2]<-1
-      }#r
-    }#s
-
   #Likelihood
   #Define latent state at first occasion
 #   for(i in 1:nFirstObsRows){

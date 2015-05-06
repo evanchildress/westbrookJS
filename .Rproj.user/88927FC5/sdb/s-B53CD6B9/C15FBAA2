@@ -1,0 +1,16 @@
+{
+    "contents" : "\n\nsimNum <- 1\nrDataName <- 'dMDataOutbkt1996_2014.RData'\ndataStore<-\"\"\n\n##########\ncomment<-paste(\" model\",simNum, \" MS Sim \"  )\n\nhome <- file.path(\"~/westbrookJS\")\nsetwd(home)\n\nsource(\"constructBugsJS.r\")\n\ndirectory <- tempfile( pattern=\"output-\", tmpdir ='.', fileext='-JS')\ndir.create(directory)\n\nbugsName <- paste0('./bugsJS','.txt')\n\nfile.copy(from='./callJS.R', to=paste(directory,'callJS.R',sep='/'))\nfile.copy(from=bugsName , to=paste(directory,bugsName ,sep='/'))\nfile.copy(from='./run.R', to=paste(directory,'run.R',sep='/'))\n##################\n\nfileOutName <- \"outJS.RData\" \n\n#########################################\nload(file.path(dataStore,rDataName))\n\nsource('./callJS.R')\n\n#writeLines(text=paste(date(),directory,afterAdapt - beforeAdapt,done - beforeJags), con='../latest_directory')\nwriteLines(text=paste(date(),directory,afterAdapt - beforeAdapt,done - beforeJags,\"[\", comment,\"]\"), con='./info.txt')\ngetwd()\n\nsave(d, out, file = fileOutName)\nsave(out,file=file.path(directory,fileOutName))\n     ",
+    "created" : 1430408134810.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3663609872",
+    "id" : "C15FBAA2",
+    "lastKnownWriteTime" : 1430509372,
+    "path" : "C:/Users/Evan/Desktop/Conte/westbrookJS/runJSOsensei.R",
+    "project_path" : "runJSOsensei.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

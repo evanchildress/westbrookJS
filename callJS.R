@@ -11,9 +11,11 @@ bugsData<-list(
   ,evalRows=evalList$evalRows
   ,nEvalRows=evalList$nEvalRows
   ,summerSamples=evalList$summerSamples
-  ,nSummerSamples=length(evalList$summerSamples)
+  ,nSummerSamples=evalList$nSummerSamples
   ,nonSummerSamples=evalList$nonSummerSamples
-  ,nNonSummerSamples=length(evalList$nonSummerSamples)
+  ,nNonSummerSamples=evalList$nNonSummerSamples
+  ,sampleRows=evalList$sampleRows
+  ,nSampleRows=evalList$nSampleRows
   #,firstObsRows=evalList$firstObsRows
   #,nFirstObsRows=evalList$nFirstObsRows
   )
@@ -36,8 +38,13 @@ nt <- 3
 nc <- 3
 
 varsToMonitor<-c(
-  'meanPhi'
-  ,'meanP'
+   'phiYoy'
+  ,'phiAdult'
+  ,'pYoy'
+  ,'pAdult'
+  ,'b'
+  ,'nYoy'
+  ,'nAdult'
   ,'psi'
   )
 
@@ -47,6 +54,9 @@ gc()
 
 (beforeJags<-Sys.time())
 
+out <- run.jags(
+  model="bugsJS.txt",
+  )
 out <- jags(
   data=bugsData,
   inits=inits,

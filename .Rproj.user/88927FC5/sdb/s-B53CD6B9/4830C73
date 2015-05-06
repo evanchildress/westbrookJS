@@ -1,0 +1,16 @@
+{
+    "contents" : "#source(\"~/makeDMData/data_prep/dMDataFunctionFromDB.r\")\n#makeDMData()\nsource(\"constructBugsStageJS.r\")\n\nsimNum <- 1\nrDataName <- 'dMDataOutbkt1996_2014.RData'\ndataStore<-\"~/process-data/data_store/processed_data\"\n\n##########\ncomment<-paste(\" model\",simNum, \" MS Sim \"  )\n\nhome <- file.path(\"~/westbrookJS\")\n\ndirectory <- tempfile( pattern=\"output-\", tmpdir ='.', fileext='-JS')\ndir.create(directory)\n\nbugsName <- paste0('./bugsJS','.txt')\n\nfile.copy(from='./callJS.R', to=paste(directory,'callJS.R',sep='/'))\nfile.copy(from=bugsName , to=paste(directory,bugsName ,sep='/'))\nfile.copy(from='./run.R', to=paste(directory,'run.R',sep='/'))\n##################\n\nfileOutName <- \"outJS.RData\" \n\n#########################################\nload(file.path(dataStore,rDataName))\n\nsource('./callJS.R')\n\n#writeLines(text=paste(date(),directory,afterAdapt - beforeAdapt,done - beforeJags), con='../latest_directory')\nwriteLines(text=paste(date(),directory,afterAdapt - beforeAdapt,done - beforeJags,\"[\", comment,\"]\"), con='./info.txt')\ngetwd()\n\nsave(d, out, file = fileOutName)\nsave(out,file=file.path(directory,fileOutName))\n     ",
+    "created" : 1430508816957.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "478928584",
+    "id" : "4830C73",
+    "lastKnownWriteTime" : 1430510550,
+    "path" : "C:/Users/Evan/Desktop/Conte/westbrookJS/runJS.R",
+    "project_path" : "runJS.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
