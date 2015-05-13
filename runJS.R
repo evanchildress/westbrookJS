@@ -1,6 +1,9 @@
 #source("~/makeDMData/data_prep/dMDataFunctionFromDB.r")
 #makeDMData()
 source("constructBugsStageJS.r")
+library(snow)
+
+parallel=T #run in parallel on n.chains cores?
 
 simNum <- 1
 rDataName <- 'dMDataOutbkt1996_2014.RData'

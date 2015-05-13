@@ -116,7 +116,7 @@ cat("model{
   }
 
   for(r in 1:nRivers){
-    psi[r]<-sum(cprob[,r]) #Inclusion probability
+    psi[r]<-sum(cprob[2:nSamples,r]) #Inclusion probability
 
     for(s in 1:nSamples){
       b[s,r]<-cprob[s,r]/psi[r]

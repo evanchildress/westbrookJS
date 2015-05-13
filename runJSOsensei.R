@@ -1,4 +1,4 @@
-
+parallel=T
 
 simNum <- 1
 rDataName <- 'dMDataOutbkt1996_2014.RData'
