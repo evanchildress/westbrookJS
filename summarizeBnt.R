@@ -1,5 +1,6 @@
 load("~/westbrookJS/resultsBnt/outJS.rDATA")
 outArray<-as.array(out)
+outArray<-outArray[1001:2000,,]
 
 
 
@@ -80,6 +81,29 @@ obear<-data.table(mean=1,lower=1,upper=1,
                   season=pYoy[river==1,season],
                   year=pYoy[river==1,year])
 pYoy<-rbind(pYoy,obear)
+
+nAdult<-results[parameter=='nAdult',list(mean,lower,upper,
+                                     sample,river,season,year)]
+nAdult[river==3,river:="4"]
+obear<-data.table(mean=0,lower=0,upper=0,
+                  sample=nAdult[river==1,sample],
+                  river=3,
+                  season=nAdult[river==1,season],
+                  year=nAdult[river==1,year])
+nAdult<-rbind(nAdult,obear)
+
+densityPlot<-function(x,nchains=3,lwd=2,...){
+  plot(density(x[,1]),col=palette()[1],...)
+  for(i in 2:nchains){
+    points(density(x[,i]),col=palette()[i],
+    type='l')
+  }
+}
+
+for(i in 506:672){
+  densityPlot(outArray[,i,],main=dimnames(outArray)[[2]][i])
+}
                   
 saveRDS(pAdult,"~/westbrookJS/resultsBnt/pAdult.rds")
 saveRDS(pYoy,"~/westbrookJS/resultsBnt/pYoy.rds")
+saveRDS(nAdult,"~/westbrookJS/resultsBnt/nAdult.rds")

@@ -40,6 +40,8 @@ for(i in toSummarize){
 
 pAdult[,year:=ceiling(sample/4)+2000]
 pYoy[,year:=ceiling(sample/4)+2000]
+nAdult[,year:=ceiling(sample/4)+2000]
 
 saveRDS(pAdult,"~/westbrookJS/results/pAdult.rds")
 saveRDS(pYoy,"~/westbrookJS/results/pYoy.rds")
+saveRDS(nAdult,"~/westbrookJS/results/nAdult.rds")
