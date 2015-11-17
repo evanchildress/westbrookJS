@@ -11,11 +11,11 @@ cat("model{
   for( s in 1:nSamples ){     
       for( r in 1:(nRivers) ){  
 
-         phiYoy[ s,r ] ~ dunif(0,1)
-         phiAdult[ s,r ] ~ dunif(0,1)
-         gamma[ s,r ] ~ dunif(0,1)
-         pYoy [ s,r ] ~ dunif(0,1)
-         pAdult [ s,r ] ~ dunif(0,1)
+         phiYoy[ s,r ] ~ dunif(0,1) #young of year survival probability
+         phiAdult[ s,r ] ~ dunif(0,1) #adult survival probability
+         gamma[ s,r ] ~ dunif(0,1) #entry probability (i.e. individual is born or immigrates)
+         pYoy [ s,r ] ~ dunif(0,1) #yoy detection probability
+         pAdult [ s,r ] ~ dunif(0,1) #adult detection probability
     
       }
     }

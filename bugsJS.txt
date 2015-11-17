@@ -14,11 +14,21 @@ model{
          phiYoy[ s,r ] ~ dunif(0,1)
          phiAdult[ s,r ] ~ dunif(0,1)
          gamma[ s,r ] ~ dunif(0,1)
-         pYoy [ s,r ] ~ dunif(0,1)
-         pAdult [ s,r ] ~ dunif(0,1)
     
       }
     }
+
+         pYoy [ s,4 ] ~ dunif(0,1)
+         pAdult [ s,4 ] ~ dunif(0,1)
+
+         pYoy [ s,3 ] ~ dunif(0,1)
+         pAdult [ s,3 ] ~ dunif(0,1)
+
+         pYoy [ s,1 ] ~ dunif(0,1)
+         pAdult [ s,1 ] ~ dunif(0,1)
+
+         pYoy [ s,2 ] <- pYoy[ s,1 ]
+         pAdult [ s,2 ] <- pAdult[ s,1 ]
 
   
   #Define state-transition and observation matrices
@@ -116,7 +126,7 @@ model{
   }
 
   for(r in 1:nRivers){
-    psi[r]<-sum(cprob[,r]) #Inclusion probability
+    psi[r]<-sum(cprob[2:nSamples,r]) #Inclusion probability
 
     for(s in 1:nSamples){
       b[s,r]<-cprob[s,r]/psi[r]

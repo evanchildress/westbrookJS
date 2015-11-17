@@ -1,0 +1,77 @@
+model{
+  phiAdult~dunif(0,1)
+  phiYoy~dunif(0,1)
+  pAdult~dunif(0,1)
+  pYoy~dunif(0,1)
+  
+  for(s in 1:nSamples){
+    gamma[s]~dunif(0,1)
+  }
+  
+  for(s in 1:nSamples){
+  #state transition probabilities
+  ps[1,s,1]<-1-gamma[s]
+  ps[1,s,2]<-gamma[s]
+  ps[1,s,3]<-0
+  ps[1,s,4]<-0
+  ps[2,s,1]<-0
+  ps[2,s,2]<-0
+  ps[2,s,3]<-phiYoy
+  ps[2,s,4]<-1-phiYoy
+  ps[3,s,1]<-0
+  ps[3,s,2]<-0
+  ps[3,s,3]<-phiAdult
+  ps[3,s,4]<-1-phiAdult
+  ps[4,s,1]<-0
+  ps[4,s,2]<-0
+  ps[4,s,3]<-0
+  ps[4,s,4]<-1
+}
+  
+  #Observation state matrix
+  po[1,1]<-0
+  po[1,2]<-1
+  po[2,1]<-pYoy
+  po[2,2]<-1-pYoy
+  po[3,1]<-pAdult
+  po[3,2]<-1-pAdult
+  po[4,1]<-0
+  po[4,2]<-1
+  
+  
+  for(i in 1:nEvalRows){
+   z[evalRows[i]]~dcat(ps[z[evalRows[i]-1],sample[evalRows[i]],])
+   enc[evalRows[i]]~dcat(po[z[evalRows[i]],]) 
+  }
+
+  #Calculate derived population parameters
+  for(s in 2:nSamples){
+      qgamma[s-1]<-1-gamma[s]
+  }
+  
+
+    cprob[1]<-gamma[2]
+    
+    for(s in 3:nSamples){
+      cprob[s-1]<-gamma[s]*prod(qgamma[1:(s-1)])
+  }
+  
+
+    psi<-sum(cprob[1:(nSamples-1)]) #Inclusion probability
+    
+    for(s in 2:nSamples){
+      b[s-1]<-cprob[s-1]/psi
+    }
+
+
+
+  for(s in 1:nSamples){
+    for(n in 1:nSampleRows[s]){
+      yoyAlive[n,s]<-equals(z[sampleRows[n,s]],2)
+      adultAlive[n,s]<-equals(z[sampleRows[n,s]],3)
+    }
+    nYoy[s]<-sum(yoyAlive[1:nSampleRows[s],s])
+    nAdult[s]<-sum(adultAlive[1:nSampleRows[s],s])
+  }
+
+  }
